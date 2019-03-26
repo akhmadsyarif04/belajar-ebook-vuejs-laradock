@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+
+    <script src="node_modules/vue/dist/vue.js"></script>
+    <script src="node_modules/vue-router/dist/vue-router.js"></script>
+
+  </head>
+  <body>
+    <div id="app">
+      <p>
+        <router-link to="/">Home</router-link>
+        <router-link to="/about">About</router-link>
+        <router-link to="/books">Books</router-link>
+      </p>
+      <hr>
+      <router-view></router-view>
+    </div>
+
+
+    <script type="module">
+      import { BooksComponent } from './3BooksComponent.js'
+      import { BookComponent } from './3BookComponent.js'
+
+      // <!-- definisikan konfigurasi component -->
+      const Home = { template: '<div>Halaman Home</div>' }
+      const About = {
+        template: '<div>Halaman About</div>'
+      }
+
+      // mapping route path dengan componentnya
+      const routes = [
+          { path: '/', component: Home, alias: '/Home' },
+          { path: '/about', component: About, meta: { login:true } },
+          { path: '/books', component: BooksComponent },
+          { path: '/book/:id', component: BookComponent },
+          { path: '*', redirect: '/' },
+      ]
+
+      // register routes pada objek router
+      const router = new VueRouter({
+        routes // short 'routes: routes'
+      })
+
+      router.beforeEach((to, from, next) => {
+        if (to.matched.some(record => record.meta.login)) {
+          alert('Halaman ini hanyak untuk user yang sudah login')
+          next(false)
+        }else{
+          next()
+        }
+      })
+
+      // register objek router pada objek vue
+      var vm = new Vue({
+        el: '#app',
+        router,
+      })
+
+    </script>
+
+  </body>
+</html>

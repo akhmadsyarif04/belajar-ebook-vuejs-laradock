@@ -1,0 +1,27 @@
+<template>
+<!-- <HelloWorld /> -->
+</template>
+
+<script>
+// import HelloWorld from '../components/HelloWorld'
+
+// export default {
+//   components: {
+//     HelloWorld
+//   },
+//   <
+//   script >
+  export default {
+    created() {
+      // window.axios.get('http://larashop-api.test/buku/PHP%20MySQL')
+      //   .then((response) => {
+      //     console.log(response)
+      //   })
+      //   .catch((error) => {
+      //     console.log(error)
+      //   })
+    }
+  }
+
+// }
+</script>

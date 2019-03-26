@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<style media="screen">
+.fade-enter-active, .fade-leave-active {
+transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+opacity: 0;
+}
+
+</style>
+<body>
+  <div id="app">
+    <button @click="currentComponent = 'list'">List</button>
+    <button @click="currentComponent = 'detail'">Detail</button>
+    <hr>
+    <!-- <component :is="currentComponent"></component> -->
+    <transition name="fade" mode="out-in">
+      <component :is="currentComponent"></component>
+    </transition>
+
+  </div>
+
+
+  <script type="text/javascript">
+    var list = {
+      template: `
+  <div class="card">
+  <strong>Bahasa Pemrograman</strong>
+  <ul>
+  <li>Javascript</li>
+  <li>PHP</li>
+  <li>Java</li>
+  </ul>
+  </div>
+  `
+    }
+    var detail = {
+      template: `
+          <div class="card">
+        <strong>PHP</strong>
+        <p>
+        PHP adalah singkatan dari PHP Hypertext Preprocessor.
+        </p>
+        </div>
+        `
+    }
+
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        currentComponent: 'list'
+      },
+      components: {
+        'list': list,
+        'detail': detail,
+
+      },
+
+    })
+  </script>
+
+</body>
+
+</html>

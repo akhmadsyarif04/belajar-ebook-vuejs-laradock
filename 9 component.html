@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <hello-word></hello-word>
+    <component-1></component-1>
+    <component-2></component-2>
+    <component-3></component-3>
+
+  </div>
+
+  <div id="app2">
+      <h1>Object Value 1</h1>
+      <component-a></component-a>
+      <component-b></component-b>
+  </div>
+
+  <div id="app3">
+      <h1>Object Value 2</h1>
+      <component-b></component-b>
+      <component-c></component-c>
+  </div>
+
+
+  <script type="text/javascript">
+    // component Global
+    Vue.component('hello-word', {
+      data() {
+        return {
+          message: 'Hello Word!'
+        }
+      },
+      template: '<h1> {{ message }} </h1> '
+    })
+
+    Vue.component('component-a', {
+      template: '<p>component A</p>'
+    })
+
+    Vue.component('component-b', {
+      template: '<p>component B</p>'
+    })
+
+    Vue.component('component-c', {
+      template: '<p>component C</p>'
+    })
+
+    // component local
+    var componentA = {
+      template: '<p>component local A</p>'
+    }
+
+    var componentB = {
+      template: '<p>component local B</p>'
+    }
+
+    var componentC = {
+      template: '<p>component local C</p>'
+    }
+
+    var vm = new Vue({
+      el: '#app',
+      components: {
+        'component-1' : componentA,
+        'component-2' : componentB,
+        'component-3' : componentC,
+
+      }
+    })
+    new Vue({
+      el: '#app2'
+    })
+    new Vue({
+      el: '#app3'
+    })
+  </script>
+
+</body>
+
+</html>

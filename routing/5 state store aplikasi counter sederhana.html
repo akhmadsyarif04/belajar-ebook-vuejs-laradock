@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+
+    <script src="node_modules/vue/dist/vue.js"></script>
+    <script src="node_modules/vue-router/dist/vue-router.js"></script>
+    <script src="node_modules/vuex/dist/vuex.js"></script>
+
+  </head>
+  <body>
+    <div id="app">
+
+    </div>
+
+
+    <script type="module">
+      import { Hello } from "./6 hello.js"
+
+      const store = new Vuex.Store({
+        // strict: true,
+        state: {
+          counter: 0,
+          counter2: 0,
+        },
+        mutations: {
+          // increment (state) {
+          //   state.counter++
+          // }
+          // versi es6 arror function
+          increment: state => state.counter++,
+          increment2: state => state.counter2++,
+        }
+      })
+
+      // register objek router pada objek vue
+      var vm = new Vue({
+        el: '#app',
+        store,
+        components: {
+          'Hello':Hello
+        },
+        // local state as computed
+        computed: {
+          counter(){
+            return store.state.counter
+          }
+        },
+        // view
+        template:
+        `
+          <div>
+            {{ counter }}
+            <button @click="increment()">+</button>
+            <Hello></Hello>
+          </div>
+        `,
+        // action
+        methods:{
+          increment(){
+            // this.$store.state.counter++
+            store.commit('increment')
+            store.commit('increment2')
+          }
+
+        }
+      })
+
+    </script>
+
+  </body>
+</html>

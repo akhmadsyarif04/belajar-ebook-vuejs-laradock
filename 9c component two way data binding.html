@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <custom-input v-model="searchText"></custom-input>
+  </div>
+
+
+  <script type="text/javascript">
+
+    Vue.component('custom-input', {
+    props: ['value'],
+    template: `
+    <input
+    :value="value"
+    @input="$emit('input', $event.target.value)"
+    >
+    `
+    })
+
+    var vm = new Vue({
+      el: '#app',
+      data : {
+        searchText: ''
+      },
+      components: {
+
+      },
+
+    })
+  </script>
+
+</body>
+
+</html>

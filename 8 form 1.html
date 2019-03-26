@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <form>
+      <input type="text" name="title" v-model="title" placeholder="masukan judul" />
+      {{ title }}
+      <br><br>
+      <textarea name="descriptions" v-model="descriptions" placeholder="masukan descriptions" rows="8" cols="80">
+      </textarea>
+      {{ descriptions }}
+      <hr>
+      <input type="number" name="price" v-model.number="price">
+      <hr>
+      <input type="text" name="judul" v-model.trim="judul" placeholder="masukan judul">
+      <hr>
+      Paket <br>
+      <input type="radio" name="bukuA" value="A" v-model="paket">
+      <label for="bukuA">Buku Laravel</label>
+      <br>
+      <input type="radio" name="bukuB" value="B" v-model="paket">
+      <label for="bukuB">Buku Vue</label>
+      <br>
+      <input type="radio" name="bukuC" value="AB" v-model="paket">
+      <label for="bukuC">Buku Laravel + Vue Js</label>
+      <br>
+      <span>Pilihan Paket : {{ paket }}</span>
+      <hr>
+      <select name="category" v-model="category">
+        <option disabled value="">Please select one</option>
+        <option>graphics programming</option>
+        <option>Mobile Applications Programming</option>
+        <option>Virtual And Augmented Reality</option>
+      </select>
+      <span>Kategori : {{ category }}</span>
+      <hr>
+      <select name="gender" v-model="gender">
+        <option value="false">Wanita</option>
+        <option value="true">Pria</option>
+      </select>
+      <span>Selected: {{ gender }}</span>
+      <hr>
+      Hobby<br>
+      <input type="checkbox" name="hobby1" value="nonton" v-model="hobbies">
+      <label for="hobby1">Nonton</label>
+      <input type="checkbox" name="hobby2" value="jalan" v-model="hobbies">
+      <label for="hobby2">Jalan</label>
+      <input type="checkbox" name="hobby3" value="makan" v-model="hobbies">
+      <label for="hobby3">Makan</label>
+      <br>
+      <span>Pilihan hobi: {{ hobbies }}</span>
+      <hr>
+      <select name="categories" v-model="categories" multiple>
+        <option v-for="option in options" :value="option.value">
+          {{ option.text }}
+        </option>
+      </select>
+      <span>Selected: {{ categories }}</span>
+    </form>
+  </div>
+
+  <script type="text/javascript">
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        title: "",
+        descriptions: "",
+        judul: "",
+        price: "",
+        paket: "",
+        category: "",
+        gender: true,
+        hobbies: [],
+        categories: [],
+        options: [{
+            text: 'Graphics Programming',
+            value: '01'
+          },
+          {
+            text: 'Mobile Application Development',
+            value: '02'
+          },
+          {
+            text: 'Virtual and Augmented Reality',
+            value: '03'
+          }
+        ]
+
+      },
+    })
+  </script>
+
+</body>
+
+</html>

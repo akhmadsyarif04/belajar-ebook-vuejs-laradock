@@ -1,0 +1,5 @@
+babel-loader error, harus downgrade 
+ERROR in ./src/app.js
+Module build failed (from ./node_modules/babel-loader/lib/app.js):
+
+https://github.com/babel/babel/issues/8599

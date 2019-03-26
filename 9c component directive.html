@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<style media="screen">
+  .card {
+background: #efefef;
+border:1px solid #ddd;
+margin-right:5px;
+padding:5px;
+width: 200px;
+float:left;
+}
+h3{
+min-height: 45px;
+}
+</style>
+
+<body>
+  <div id="app">
+    <!-- <book v-for="book in books" :key="book.id" :title="book.title" :descriptons="book.descriptons" :image="book.image"> -->
+    <h1>Selected: {{ selectedBook }}</h1>
+    <book v-for="book in books" :book="book" :key="book.id" @selecteds="selectedBook = $event">
+    </book>
+  </div>
+
+
+  <script type="text/javascript">
+    var BookComponent = {
+      data() {
+        return {
+          classCard: 'card'
+        }
+      },
+      // props: ['title', 'descriptons', 'image'],
+      props: ['book'],
+      // template: `
+      // <div :class="classCard">
+      // <h3>{{ title }}</h3>
+      // <img :src="image" style="width:100%">
+      // <p v-html="descriptons"></p>
+      // </div>
+      // `
+      template: `
+      <div :class="classCard">
+      <h3>{{ book.title }}</h3>
+      <img :src="book.image" style="width:100%">
+      <p v-html="book.descriptons"></p>
+      <button @click="$emit('selecteds', book.title)">Select</button>
+      </div>
+      `
+    }
+
+    var vm = new Vue({
+      el: '#app',
+      components: {
+        'book': BookComponent
+      },
+      data: {
+        selectedBook: '',
+        books: [{
+            id: 99,
+            title: 'C++ High Performance',
+            descriptons: 'Write code that scales across CPU registers, multi - core, and machine clusters ',
+            authors: 'Viktor Sehr, Björn Andrist',
+            publish_year: 2018,
+            price: 100000,
+            image: 'spider1.jpg'
+          },
+          {
+            id: 100,
+            title: 'Mastering Linux Security and Hardening',
+            descriptons: 'A comprehensive guide to mastering the art of preventing your Linux system from getting compromised ',
+            authors: 'Donald A. Tevault',
+            publish_year: 2018,
+            price: 125000,
+            image: 'spider2.jpg'
+          },
+          {
+            id: 101,
+            title: 'Mastering PostgreSQL 10',
+            descriptons: 'Master the capabilities of PostgreSQL 10 to efficiently manage and maintain your database ',
+            authors: 'Hans-Jürgen Schönig',
+            publish_year: 2016,
+            price: 90000,
+            image: 'spider3.jpg'
+          }
+        ]
+      }
+    })
+  </script>
+
+</body>
+
+</html>

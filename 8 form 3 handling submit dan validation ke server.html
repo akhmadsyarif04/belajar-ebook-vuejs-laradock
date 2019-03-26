@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<style>
+  form {
+border: 1px solid #ddd;
+padding:5px;
+width:225px;
+background: #efefef;
+}
+label{
+display: block;
+margin-top: 5px;
+}
+input, textarea, select, option {
+min-width: 200px;
+}
+</style>
+
+<body>
+  <div id="app">
+    <form ref="formBook" @submit.prevent="submitForm($event)" action="http://example.com/add-product" method="post" enctype="multipart/form-data">
+      <p v-if="error.length">
+        <b>Please correct the following error(s):</b>
+        <ul>
+          <li v-for="errors in error">{{ errors }}</li>
+        </ul>
+      </p>
+
+      <label>Title : </label>
+      <input name="title" type="text" v-model="title" ref="title">
+
+      <label>descriptions : </label>
+      <textarea name="descriptions" v-model="descriptions" rows="8" cols="80" ref="descriptions"></textarea>
+
+      <label>Authors : </label>
+      <input name="authors" type="text" v-model="authors" ref="authors">
+
+      <label>Price : </label>
+      <input name="price" type="text" v-model.number="price" ref="price">
+
+      <label>categories : </label>
+      <select name="categories" v-model="categories" multiple>
+        <option v-for="option in options" :value="option.value">
+          {{ option.text }}
+        </option>
+      </select>
+
+      <label>Cover : </label>
+      <input type="file" name="cover" ref="cover">
+
+      <label></label>
+      <input type="submit" name="" value="submit">
+    </form>
+  </div>
+
+  <script type="text/javascript">
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        title: '',
+        descriptions: '',
+        authors: '',
+        price: 0,
+        categories: [],
+        options: [{
+            text: 'Graphics Programming',
+            value: '01'
+          },
+          {
+            text: 'Mobile Application Development',
+            value: '02'
+          },
+          {
+            text: 'Virtual and Augmented Reality',
+            value: '03'
+          }
+        ],
+        // cover : '',
+        error: []
+      },
+      methods: {
+        submitForm(event) {
+          console.log(event)
+
+          // kode validasi
+          let error = 0
+          this.error = []
+          if (this.title.length < 3) {
+            error++
+            this.error.push('Title minimal 3 karakter!')
+            // this.$refs.title.focus()
+            this.$refs.title.select()
+            // alert('Title minimal 3 karakter!');
+          }
+          if (this.descriptions.length > 500) {
+            error++
+            this.$refs.descriptions.focus()
+            this.error.push('Description maximal 500 karakter!')
+            // alert('Description maximal 500 karakter!')
+          }
+          if (this.authors.length < 3) {
+            error++
+            this.$refs.authors.focus()
+            this.error.push('Authors minimal 3 karakter!')
+            // alert('Authors minimal 3 karakter!')
+          }
+          if (this.price < 0) {
+            error++
+            this.$refs.price.focus()
+            this.error.push('Price tidak boleh minus!')
+            // alert('Price tidak boleh minus!')
+          }
+          if (this.categories.length === 0) {
+            error++
+            this.error.push('Pilih minimal 1 category!')
+            // alert('Pilih minimal 1 category!')
+          }
+
+          if (this.error.length === 0) {
+            // alert('Terima kasih telah mengisi data dengan benar!')
+
+            // persiapan data
+            let formBook = this.$refs.formBook
+            formData = new FormData(formBook);
+
+            // kirim data ke server
+            let xhttp = new XMLHttpRequest() // create objek XMLHttp
+
+            // definisikan fungsi ketika terjadi perubahan state
+            xhttp.onreadystatechange = function() {
+              // state ini menunjukan data terkirim dan diterima server dengan baik
+              if (this.readyState == 4 && this.status == 200) {
+                // respon text dari server
+                console.log(this.responseText);
+              }
+            }
+
+            // sesuaikan dengan lokasi file index.php dilokasi komputer kmau
+            xhttp.open("POST", "http://localhost/vuejs/8_form_4_send_data_to_server.php", true)
+
+            // get file yang dibrowse user
+            // let cover = this.$refs.cover.files[0]
+            // tambahkan ke object formData
+            // formData.append("cover", cover);
+
+            // bisa juga  langsung sama file nya jika  berada dalam folder yang sama
+            // xhttp.open("POST","index.php", true)
+
+            // kirim objek formdata
+            xhttp.send(formData)
+          }
+
+          // kode kirim ke server
+
+          // kode status informasi
+          // alert('Terima Kasih');
+
+          // block redirect ke action
+          // event.preventDefault()
+        }
+      }
+    })
+  </script>
+
+</body>
+
+</html>

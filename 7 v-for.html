@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <li v-for="(book, index) in books">
+      {{ index+1 }}. {{ book }}
+    </li>
+    <hr>
+    <li v-for="(value, key, index) of book2">
+      {{ index+1}}. {{ key }} : {{ value }}
+    </li>
+    <hr>
+    <table>
+      <tr v-for="(book, index) of books_json" :key="index" v-if="book.price > 90000">
+        <td>
+          <img width="100" :src="book.image" alt="">
+        </td>
+        <td>
+          {{ index+1 }}. <hr>
+          title: {{ book.title }}<br>
+          description: {{ book.description }}<br>
+          authors: {{ book.authors }}<br>
+          price: {{ book.price }}
+        </td>
+      </tr>
+    </table>
+    <hr>
+    <li v-for="(book, index) in booksPrefixM">
+      {{ index+1 }}. {{ book }}
+    </li>
+  </div>
+
+  <script type="text/javascript">
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        books: [
+          'C++ High Performance',
+          'Mastering Linux Security and Hardening',
+          'Python Programming Blueprints',
+          'Mastering PostgreSQL 10'
+        ],
+        book2: {
+          id: 99,
+          title: 'C++ High Performance',
+          description: 'Write code that scales across CPU registers, multi-core,and machine clusters ',
+          authors: 'Viktor Sehr, Björn Andrist',
+          publish_year: 2018,
+          price: 100000,
+        },
+        books_json: [{
+            id: 99,
+            title: 'C++ High Performance',
+            description: 'Write code that scales across CPU registers, multi-core,and machine clusters ',
+            authors: 'Viktor Sehr, Björn Andrist',
+            publish_year: 2018,
+            price: 100000,
+            image: 'spider1.jpg'
+          },
+          {
+            id: 100,
+            title: 'Mastering Linux Security and Hardening',
+            description: 'A comprehensive guide to mastering the art of preventing your Linux system from getting compromised ',
+            authors: 'Donald A. Tevault',
+            publish_year: 2018,
+            price: 125000,
+            image: 'spider2.jpg'
+          },
+          {
+            id: 101,
+            title: 'Mastering PostgreSQL 10',
+            description: 'Master the capabilities of PostgreSQL 10 to efficiently manage and maintain your database ',
+            authors: 'Hans-Jürgen Schönig',
+            publish_year: 2016,
+            price: 90000,
+            image: 'spider3.jpg'
+          },
+
+        ]
+
+      },
+      computed: {
+        booksPrefixM(){
+          return this.books.filter((books) => {
+            return books[0] === 'M'
+          })
+        }
+      }
+    })
+  </script>
+
+</body>
+
+</html>

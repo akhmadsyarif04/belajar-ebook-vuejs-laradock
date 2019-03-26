@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <input type="text" v-model="keyword" placeholder="ketikan kata kunci">
+    <ul>
+      <li v-for="(book, index) of filterBooks" :key="index">
+        {{ book }}
+      </li>
+    </ul>
+  </div>
+
+  <script type="text/javascript">
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        keyword: '',
+        books: [
+          'C++ High Perfomance',
+          'Mastering Linux Security and Hardening',
+          'Python Programming Blueprints',
+          'Mastering PostgreSQL 10'
+        ]
+      },
+      computed:{
+        filterBooks(){
+          return this.books.filter((books)=>{
+            return books.includes(this.keyword)
+          })
+        }
+      }
+    })
+  </script>
+
+</body>
+
+</html>

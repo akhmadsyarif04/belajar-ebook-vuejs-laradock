@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <h1>{{ name }}</h1>
+    <p>{{ age }}</p>
+
+  </div>
+  <script type="text/javascript">
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        name: 'Hafid', // string
+        age: 33, // integer
+        gender: true, // boolean (Pria)
+        hobby: ['coding', 'sleeping'], // array
+        children: {
+          1: 'Ammar',
+          2: 'Faqih',
+          3: 'Syamil'
+        } // object
+
+      },
+      beforeCreate() {
+        console.log('before create: ' +
+          'message = ' + this.message)
+      },
+      created() {
+        console.log('created: ' +
+          'message = ' + this.message)
+      },
+
+    })
+  </script>
+
+</body>
+
+</html>

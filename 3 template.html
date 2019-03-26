@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <style media="screen">
+    .title {
+      color: red;
+    }
+  </style>
+
+  <div id="app">
+    <h1 v-once>{{ name }}</h1>
+    <!--
+    v-once
+    Untuk mencegah perubahan nilai variabel template pada saat runtime, kita bisa gunakan directive v-once.
+    -->
+    <h1>{{ message }}</h1>
+    <h1 v-html="message"></h1>
+    <h1 v-bind:class="class_h1">{{ name }}</h1>
+
+  </div>
+  <script type="text/javascript">
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        name: 'Hafid', // string
+        message: "<span style='color:red'>Hello World!</a>",
+        class_h1: 'title',
+      },
+    })
+  </script>
+
+</body>
+
+</html>

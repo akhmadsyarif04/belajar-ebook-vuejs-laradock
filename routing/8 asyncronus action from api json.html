@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+
+    <script src="node_modules/vue/dist/vue.js"></script>
+    <script src="node_modules/vue-router/dist/vue-router.js"></script>
+    <script src="node_modules/vuex/dist/vuex.js"></script>
+
+  </head>
+  <body>
+    <div id="app">
+      <div ip="app">
+        <ul v-for="book in books">
+          <li>{{ book.title }}</li>
+        </ul>
+
+      </div>
+    </div>
+
+
+    <script type="module">
+      var store = new Vuex.Store({
+        strict: true,
+        state: {
+          books: []
+        },
+        mutations: {
+          setBooks(state, books){
+            state.books = books
+          }
+        },
+        actions:{
+          getBooks ({commit}) {
+            return new Promise((resolve, reject) => {
+              var xhr = new XMLHttpRequest();
+              xhr.open("GET", "https://api.jsonbin.io/b/5c602cf6e9e7c1183910a15a");
+              xhr.onload = function () {
+                if(this.status >= 200 && this.status < 300) {
+                  commit('setBooks', JSON.parse(xhr.response))
+                  resolve(xhr.response);
+                }else {
+                  reject({
+                    status: this.status,
+                    statusText: xhr.statusText
+                  });
+                }
+              };
+              xhr.onerror = function () {
+                reject({
+                  status: this.status,
+                  statusText: xhr.statusText
+                });
+              };
+              xhr.send();
+
+              // // if success
+              // resolve()
+              // // if error
+              // reject()
+            })
+          }
+        },
+        getters: {
+          books: state => state.books
+        }
+      })
+
+      new Vue({
+        el: '#app',
+        store,
+        computed: {
+          books() {
+            return store.getters.books
+          }
+        },
+        created() {
+          store.dispatch('getBooks')
+            .then((response) => {
+              console.log('result: ', response)
+            })
+            .catch((error) => {
+              console.log('error', error);
+            })
+        }
+      })
+
+    </script>
+
+  </body>
+</html>

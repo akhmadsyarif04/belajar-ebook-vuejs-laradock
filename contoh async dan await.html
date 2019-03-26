@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      const firstPromise = () => (new promise((resolve, reject) => {
+        setTimeout(() => {resolve('first promise')}, 1000)
+      }))
+
+      const secondPromise = () => (new promise((resolve, reject) => {
+        setTimeout(() => {resolve('second promise')}, 1000)
+      }))
+
+      const thirdPromise = () => (new promise((resolve, reject) => {
+        setTimeout(() => {resolve('third promise')}, 1000)
+      }))
+
+      async function asyncParalel() {
+        let a = firstPromise()
+        let b = secondPromise()
+        let c = thirdPromise()
+        console.log('done');
+      }
+
+      async function asyncSerial() {
+        let a = await firstPromise()
+        let b = await secondPromise()
+        let c = await thirdPromise()
+        console.log('done');
+      }
+
+      asyncParalel()
+      asyncSerial()
+    </script>
+  </body>
+</html>

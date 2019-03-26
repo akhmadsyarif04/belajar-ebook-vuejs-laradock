@@ -1,0 +1,106 @@
+<!--
+Objek Vue yang kita definisikan sebenarnya memiliki siklus hidup atau life cycle mulai dari ketika objek itu
+diciptakan, view dirender, data dimuat, hingga objek itu dihapus. Dimana pada setiap tahap siklus tersebut
+terdapat hook yang bisa kita manfaatkan untuk menjalankan suatu perintah tertentu.
+-->
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <h1>{{ message }}</h1>
+  </div>
+  <script type="text/javascript">
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        message: 'Hello world!',
+      },
+      beforeCreate() {
+        console.log('before create: ' +
+          'message = ' + this.message)
+      },
+      created() {
+        console.log('created: ' +
+          'message = ' + this.message)
+        // console.log(this.$data)
+
+      },
+
+      // 1. beforeCreate yaitu hook sesaat setelah objek Vue dan komponennya diinisialisasi. Properti data belum
+      // dapat diakses atau digunakan pada hook ini.
+      // 2. created yaitu hook ketika objek Vue telah selesai diciptakan. Pada hook ini, sifat reactivity pada
+      // properti data juga sudah didefinisikan sehingga kita sudah diizinkan untuk mengakses dan
+      // memanipulasi data. Properti computed yang digunakan untuk memonitor perubahan data juga sudah
+      // berjalan. Jika aplikasi membutuhkan request data dari server maka hook ini adalah hook yang tepat
+      // untuk melakukannya.
+      // bentuk penulisan panjang dari penulisan function created()
+      // created: function() {
+      //   console.log('created: ' +
+      //     'message = ' + this.message)
+      //   console.log(this.$data)
+      // },
+
+      beforeMount() {
+        console.log('before mount: ' +
+          'el = ' + this.$el.textContent)
+      },
+      mounted() {
+        console.log('mounted: ' +
+          'el = ' + this.$el.textContent)
+      },
+
+      // 3. beforeMount yaitu hook ketika template dicompile.
+      // 4. mounted yaitu hook ketika elemen (properti el) telah diinisialisasi, data telah dimuat dan view telah
+      // dirender.
+      // Kedua hook ini dapat mengakses DOM, namun pada hook beforeMount, data belum dirender dengan
+      // template, sedangkan hook mounted sudah.
+
+      beforeUpdate() {
+        console.log('before update: ' +
+          'el = ' + this.$el.textContent)
+      },
+      updated() {
+        console.log('update: ' +
+          'el = ' + this.$el.textContent)
+      },
+      mounted() {
+        console.log('mounted: ' +
+          'el = ' + this.$el.textContent)
+      },
+
+      // 5. beforeUpdate yaitu hook yang terjadi setelah mounted dan hanya terjadi jika ada perubahan data yang
+      // mengakibatkan render ulang. Tepatnya, hook ini terjadi sebelum view dirender ulang.
+      // 6. updated yaitu hook yang terjadi setelah beforeUpdate yaitu setelah view dirender ulang.
+
+      beforeDestroy() {
+        console.log('before destroy')
+      },
+      destroyed() {
+        console.log('destroyed')
+      },
+
+      // 7. beforeDestroy yaitu hook yang terjadi sebelum component dihapus.
+      // 8. destroyed yaitu hook yang terjadi setelah objek Vue dihapus.
+
+    })
+
+    // Hook beforeUpdate ini setara dengan method watch.
+
+    vm.$watch('message', function(newValue, oldValue) {
+      console.log('Var message diubah dari ' + oldValue +
+        ' menjadi ' + newValue)
+    })
+    vm.message = 'Selamat Datang!'
+  </script>
+
+</body>
+
+</html>

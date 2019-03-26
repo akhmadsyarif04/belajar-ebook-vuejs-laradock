@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<style>
+form {
+border: 1px solid #ddd;
+padding:5px;
+width:225px;
+background: #efefef;
+}
+label{
+display: block;
+margin-top: 5px;
+}
+input, textarea, select, option {
+min-width: 200px;
+}
+</style>
+
+<body>
+  <div id="app">
+    <form ref="formBook" @submit.prevent="submitForm($event)" action="http://example.com/add-product" method="post">
+      <p v-if="error.length">
+        <b>Please correct the following error(s):</b>
+        <ul>
+          <li v-for="errors in error">{{ errors }}</li>
+        </ul>
+      </p>
+
+      <label>Title : </label>
+      <input type="text" v-model="title" ref="title">
+
+      <label>descriptions : </label>
+      <textarea name="descriptions" v-model="descriptions" rows="8" cols="80" ref="descriptions"></textarea>
+
+      <label>Authors : </label>
+      <input type="text" v-model="authors" ref="authors">
+
+      <label>Price : </label>
+      <input type="text" v-model.number="price" ref="price">
+
+      <label>categories : </label>
+      <select v-model="categories" multiple>
+        <option v-for="option in options" :value="option.value">
+          {{ option.text }}
+        </option>
+      </select>
+
+      <label></label>
+      <input type="submit" name="" value="submit">
+    </form>
+  </div>
+
+  <script type="text/javascript">
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        title : '',
+        descriptions : '',
+        authors : '',
+        price : 0,
+        categories : [],
+        options : [
+          { text: 'Graphics Programming', value: '01' },
+          { text: 'Mobile Application Development', value: '02' },
+          { text: 'Virtual and Augmented Reality', value: '03' }
+        ],
+        error : []
+      },
+      methods: {
+        submitForm(event){
+          console.log(event)
+
+          // kode validasi
+          let error = 0
+          this.error = []
+          if (this.title.length < 3) {
+            error++
+            this.error.push('Title minimal 3 karakter!')
+            // this.$refs.title.focus()
+            this.$refs.title.select()
+            // alert('Title minimal 3 karakter!');
+          }
+          if (this.descriptions.length > 500) {
+            error++
+            this.$refs.descriptions.focus()
+            this.error.push('Description maximal 500 karakter!')
+            // alert('Description maximal 500 karakter!')
+          }
+          if (this.authors.length < 3) {
+            error++
+            this.$refs.authors.focus()
+            this.error.push('Authors minimal 3 karakter!')
+            // alert('Authors minimal 3 karakter!')
+          }
+          if (this.price < 0) {
+            error++
+            this.$refs.price.focus()
+            this.error.push('Price tidak boleh minus!')
+            // alert('Price tidak boleh minus!')
+          }
+          if (this.categories.length === 0) {
+            error++
+            this.error.push('Pilih minimal 1 category!')
+            // alert('Pilih minimal 1 category!')
+          }
+
+          if (this.error.length === 0) {
+            alert('Terima kasih telah mengisi data dengan benar!')
+
+            // kirim data ke server
+            let formData = new FormData()
+            formData.append('title', this.title)
+            formData.append('descriptions', this.descriptions)
+            formData.append('authors', this.authors)
+            formData.append('price', this.price)
+            formData.append('categories', this.categories)
+            
+          }
+
+          // kode kirim ke server
+
+          // kode status informasi
+          // alert('Terima Kasih');
+
+          // block redirect ke action
+          // event.preventDefault()
+        }
+      }
+    })
+  </script>
+
+</body>
+
+</html>

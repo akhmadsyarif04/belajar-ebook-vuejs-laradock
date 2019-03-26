@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <div v-if="nilai === 'A'">
+      Sempurna
+    </div>
+    <div v-else-if="nilai === 'B'">
+      Bagus
+    </div>
+    <div v-else-if="nilai === 'C'">
+      Cukup
+    </div>
+    <div v-else>
+      Kurang
+    </div>
+    <button v-on:click="info('selamat datang')">
+      Informasi
+    </button>
+    <br>
+    <button v-on:click="counter += 1">
+      Counter
+    </button>
+    <p>{{ counter }}</p>
+    <a href="https://vuejs.org" v-on:click.prevent="link()">
+      Vuejs.org
+    </a>
+  </div>
+
+  <script type="text/javascript">
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        nilai : "B",
+        counter: 0
+      },
+      methods: {
+        info(text){
+          // window.alert(text);
+          // atau
+          alert(text)
+        },
+        link(){
+          alert('Go to link');
+        }
+      }
+    })
+  </script>
+
+</body>
+
+</html>

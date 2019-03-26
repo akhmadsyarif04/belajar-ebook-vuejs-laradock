@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <h1>{{ counter }}</h1>
+    <button onclick="vm.increment()">+</button>
+
+    <p>
+      {{ fullName }}
+    </p>
+    <!-- Filter -->
+    <h2>filter : {{ message | upper }}</h2>
+    <!-- methods -->
+    <h2>methods : {{ upper(message) }}</h2>
+    <!-- computed -->
+    <h2>computed : {{ messageToUpperCase }}</h2>
+
+    <!-- contoh filter dengan argument parameter -->
+    <h2>{{ price | formatCurrency('USD') }}</h2>
+    <h2>{{ price | formatCurrency('IDR') }}</h2>
+
+    <!-- filter digunakan secara berurutan sekaligus -->
+    <h3>Upper : {{ message | upper }}</h3>
+    <h3>reverse : {{ message | reverse }}</h3>
+    <h3>Upper & revers : {{ message | upper | reverse }}</h3>
+
+  </div>
+
+  <script type="text/javascript">
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        counter: 0,
+        firstname: 'Akhmad',
+        lastname: 'syarif',
+        message: 'Hello World!',
+        price: 5000
+      },
+      methods: {
+        increment(){
+          this.counter++
+        },
+        upper(text){
+          return text.toUpperCase();
+        }
+      },
+      computed: {
+        fullName: function() {
+          return this.firstname + ' ' + this.lastname
+        },
+        messageToUpperCase() {
+          return this.message.toUpperCase()
+        }
+      },
+      filters: {
+        upper (text) {
+          return text.toUpperCase()
+        },
+        // filter menggunakan argument
+        formatCurrency(value, currency) {
+          var formatter = new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: currency,
+            minimumFractionDigits: 2,
+          });
+          return formatter.format(value);
+        },
+        reverse(text){
+          return text.split('').reverse().join('')
+        }
+      }
+    })
+  </script>
+
+</body>
+
+</html>

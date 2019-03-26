@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<style media="screen">
+.card {
+background: #efefef;
+border:1px solid #ddd;
+margin-right:5px;
+padding:5px;
+width: 200px;
+float:left;
+}
+h3{
+min-height: 45px;
+}
+</style>
+<body>
+  <div id="app">
+    <book
+      title="c++ High performance"
+      descriptons="Write code that scales across CPU registers, multi-core, and machine clusters"
+      image="spider1.jpg"
+    >
+    </book>
+  </div>
+
+
+  <script type="text/javascript">
+    var BookComponent = {
+      data() {
+        return {
+          classCard: 'card'
+        }
+      },
+      props: ['title', 'descriptons', 'image'],
+      template: `
+      <div :class="classCard">
+      <h3>{{ title }}</h3>
+      <img :src="image" style="width:100%">
+      <p v-html="descriptons"></p>
+      </div>
+      `
+    }
+
+    var vm = new Vue({
+      el: '#app',
+      components : {
+        'book' : BookComponent
+      }
+    })
+  </script>
+
+</body>
+
+</html>
